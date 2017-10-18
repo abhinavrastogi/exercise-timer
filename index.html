@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>Exercise Timer</title>
+	</head>
+	<body>
+		<div id="timer">
+
+		</div>
+	</body>
+	<script>
+		const startTime = Date.now();
+		const $timer = document.getElementById("timer");
+		var synth = window.speechSynthesis;
+		var timer;
+
+		function timeInterval() {
+			var currentTime = Date.now();
+			var timeDelta = Math.round((currentTime - startTime)/1000);
+			$timer.innerHTML = timeDelta;	
+			if(timeDelta % 5 === 0) {
+				var utterThis = new SpeechSynthesisUtterance(`${timeDelta} seconds up`);
+				synth.speak(utterThis);
+			}
+
+			if(timeDelta > 45) {
+				clearInterval(timer);
+
+				var utterThis = new SpeechSynthesisUtterance(`15 seconds break`);
+				synth.speak(utterThis);
+
+				setTimeout(function() {
+					var utterThis = new SpeechSynthesisUtterance(`15 seconds up!`);
+					synth.speak(utterThis);
+					timer = setInterval(timeInterval, 1000);			
+				}, 15000);
+			}
+		}
+		
+		timer = setInterval(timeInterval, 1000);
+	</script>
+</html>
