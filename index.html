@@ -32,6 +32,7 @@
 				setTimeout(function() {
 					var utterThis = new SpeechSynthesisUtterance(`15 seconds up!`);
 					synth.speak(utterThis);
+					startTime = Date.now();
 					timer = setInterval(timeInterval, 1000);			
 				}, 15000);
 			}
