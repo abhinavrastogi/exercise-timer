@@ -2,6 +2,18 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Exercise Timer</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: sans-serif;
+			}
+			#timer {
+				font-size: 48px;
+				text-align: center;
+				padding: 100px 0;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="timer">
@@ -9,7 +21,7 @@
 		</div>
 	</body>
 	<script>
-		const startTime = Date.now();
+		var startTime = Date.now();
 		const $timer = document.getElementById("timer");
 		var synth = window.speechSynthesis;
 		var timer;
@@ -19,18 +31,20 @@
 			var timeDelta = Math.round((currentTime - startTime)/1000);
 			$timer.innerHTML = timeDelta;	
 			if(timeDelta % 5 === 0) {
-				var utterThis = new SpeechSynthesisUtterance(`${timeDelta} seconds up`);
+				var utterThis = new SpeechSynthesisUtterance(`${timeDelta}`);
 				synth.speak(utterThis);
 			}
 
-			if(timeDelta > 45) {
+			if(timeDelta > 30) {
 				clearInterval(timer);
 
+				$timer.innerHTML = 'Break!';	
 				var utterThis = new SpeechSynthesisUtterance(`15 seconds break`);
 				synth.speak(utterThis);
+				
 
 				setTimeout(function() {
-					var utterThis = new SpeechSynthesisUtterance(`15 seconds up!`);
+					var utterThis = new SpeechSynthesisUtterance(`Break over!`);
 					synth.speak(utterThis);
 					startTime = Date.now();
 					timer = setInterval(timeInterval, 1000);			
